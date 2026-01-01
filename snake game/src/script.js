@@ -345,7 +345,7 @@ function startGame() {
     else if (currentDifficulty === "Medium") {
         difficultyTime = 200;
     } else if (currentDifficulty === "Hard") {
-        difficultyTime = 100;
+        difficultyTime = 175;
     }
     
     gameInterval = setInterval(gameLoop, difficultyTime);
