@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Snake Game</title>
+</head>
+<body>
+    <main>
+        <section id="board-head">
+            <h1>🐍 SNAKE GAME</h1>
+            <div class="score-board">
+                <div class="info">
+                    <span class="label">High Score</span>
+                    <span id="H-score" class="value">0</span>
+                </div>
+                <div class="info">
+                    <span class="label">Difficulty</span>
+                    <select id="difficulty-select">
+                        <option value="Easy" selected>Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+                <div class="info">
+                    <span class="label">Score</span>
+                    <span id="C-score" class="value">0</span>
+                </div>
+                <div class="info">
+                    <span class="label">Time</span>
+                    <span id="Timer" class="value">00:00</span>
+                </div>
+            </div>
+        </section>
+        <section id="board-container">
+            <div id="board"></div>
+        </section>
+        <div class="modal">
+            <div class="start-game">
+                <h3>Welcome to Snake Game!</h3><br>
+                Use arrow keys or "W A S D" to move the snake.<br>
+                <h3>Always starts from left !</h3><br>
+                <button onclick="document.querySelector('.modal').style.display = 'none';" class="btn btn-start">Start Game</button>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
