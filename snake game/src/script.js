@@ -479,3 +479,111 @@ console.log("%cSpace: Pause/Resume", "color: #e6e6e6;");
 console.log("%cR: Reset game", "color: #e6e6e6;");
 console.log("%cHave fun playing!", "color: #FF5722; font-size: 16px; font-weight: bold;");
 
+// Add this to the end of your script.js file
+
+// Mobile Controls
+if (document.getElementById('mobile-controls')) {
+    // D-Pad Controls
+    const dpadButtons = document.querySelectorAll('.dpad-btn');
+    
+    dpadButtons.forEach(btn => {
+        // Touch events for mobile
+        btn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const dir = btn.getAttribute('data-direction');
+            handleDirectionChange(dir);
+        });
+        
+        // Click events for testing on desktop
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const dir = btn.getAttribute('data-direction');
+            handleDirectionChange(dir);
+        });
+    });
+    
+    // Helper function to handle direction changes
+    function handleDirectionChange(dir) {
+        if (isPaused) return;
+        
+        if (dir === 'left' && direction !== 'right') {
+            direction = 'left';
+        } else if (dir === 'right' && direction !== 'left') {
+            direction = 'right';
+        } else if (dir === 'up' && direction !== 'down') {
+            direction = 'up';
+        } else if (dir === 'down' && direction !== 'up') {
+            direction = 'down';
+        }
+    }
+    
+    // Mobile Pause Button
+    const mobilePauseBtn = document.getElementById('mobile-pause');
+    if (mobilePauseBtn) {
+        mobilePauseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            togglePause();
+            updatePauseButtonText();
+        });
+        
+        mobilePauseBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            togglePause();
+            updatePauseButtonText();
+        });
+    }
+    
+    // Mobile Reset Button
+    const mobileResetBtn = document.getElementById('mobile-reset');
+    if (mobileResetBtn) {
+        mobileResetBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            resetGame();
+        });
+        
+        mobileResetBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            resetGame();
+        });
+    }
+    
+    // Update pause button text based on game state
+    function updatePauseButtonText() {
+        const pauseBtn = document.getElementById('mobile-pause');
+        if (pauseBtn) {
+            const span = pauseBtn.querySelector('span');
+            const svg = pauseBtn.querySelector('svg path');
+            
+            if (isPaused) {
+                span.textContent = 'Resume';
+                // Play icon
+                svg.setAttribute('d', 'M8 5v14l11-7z');
+            } else {
+                span.textContent = 'Pause';
+                // Pause icon
+                svg.setAttribute('d', 'M10 4H6v16h4V4zm8 0h-4v16h4V4z');
+            }
+        }
+    }
+}
+
+// Prevent page scrolling on mobile when using controls
+document.addEventListener('touchmove', function(e) {
+    if (e.target.closest('#mobile-controls')) {
+        e.preventDefault();
+    }
+}, { passive: false });
+
+// Add haptic feedback for mobile devices (if supported)
+function vibrateDevice(duration = 10) {
+    if ('vibrate' in navigator) {
+        navigator.vibrate(duration);
+    }
+}
+
+// Add haptic feedback to all mobile controls
+document.querySelectorAll('.dpad-btn, .control-btn').forEach(btn => {
+    btn.addEventListener('touchstart', () => {
+        vibrateDevice(10);
+    });
+});
